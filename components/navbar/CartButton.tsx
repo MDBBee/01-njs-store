@@ -14,7 +14,7 @@ function CartButton() {
     >
       <Link href="/cart" className="rounded-[4px] group">
         <LuShoppingCart />
-        <span className="absolute -top-3 -right-3 text-white bg-purple-900 flex justify-center items-center h-6 w-6 rounded-full group-hover:bg-purple-400">
+        <span className="absolute -top-3 -right-3 text-white bg-primary flex justify-center items-center h-6 w-6 rounded-full group-hover:bg-purple-400 duration-300">
           {numItemsInCart}
         </span>
       </Link>

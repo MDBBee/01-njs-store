@@ -1,17 +1,12 @@
-import { Button } from '@/components/ui/button';
+import FeaturedProducts from '@/components/home/FeaturedProducts';
+import Hero from '@/components/home/Hero';
 
 const HomePage = () => {
   return (
-    <div>
-      <h1 className="text-3xl">HomePage</h1>
-      <Button
-        variant="outline"
-        size="lg"
-        className="capitalize m-8 hover:bg-slate-500 rounded-3xl"
-      >
-        ClickMe
-      </Button>
-    </div>
+    <>
+      <Hero />
+      <FeaturedProducts />
+    </>
   );
 };
 export default HomePage;
