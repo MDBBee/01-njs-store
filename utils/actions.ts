@@ -1,5 +1,7 @@
+'use server';
 import db from '@/utils/db';
 import { redirect } from 'next/navigation';
+import { actionFunction } from '@/utils/types';
 
 export const fetchFeaturedProducts = async () => {
   const products = await db.product.findMany({
@@ -33,4 +35,11 @@ export const fetchSingleProduct = async (productId: string) => {
 
   if (!product) redirect('/products');
   return product;
+};
+
+export const createProductAction: actionFunction = async (
+  prevState,
+  formData
+) => {
+  return { message: 'hi' };
 };
