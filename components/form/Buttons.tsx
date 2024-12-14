@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { SignInButton } from '@clerk/nextjs';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { LuTrash2, LuPen } from 'react-icons/lu';
+import { TooltipInfo } from '@/components/form/ToolTip';
 
 type btnSize = 'default' | 'lg' | 'sm';
 
@@ -39,5 +40,36 @@ export function SubmitButton({
         text
       )}
     </Button>
+  );
+}
+
+type actionType = 'edit' | 'delete';
+
+export function IconButton({
+  actionType,
+  name,
+}: {
+  actionType: actionType;
+  name: string;
+}) {
+  const { pending } = useFormStatus();
+  const renderIcon = () => {
+    switch (actionType) {
+      case 'edit':
+        return <LuPen />;
+      case 'delete':
+        return <LuTrash2 />;
+      default:
+        const never: never = actionType;
+        throw new Error(`Unkown action type!`);
+    }
+  };
+
+  return (
+    <TooltipInfo text={`${actionType}  "${name}"  product`}>
+      <Button type="submit" size="icon" variant="outline">
+        {pending ? <ReloadIcon className="animate-spin" /> : renderIcon()}
+      </Button>
+    </TooltipInfo>
   );
 }

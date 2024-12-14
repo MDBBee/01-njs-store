@@ -5,10 +5,17 @@ import { actionFunction } from '@/utils/types';
 import { currentUser } from '@clerk/nextjs/server';
 import { imageSchema, productSchema, validateWithZodSchema } from './schemas';
 import { uploadImage } from './supabase';
+import { revalidatePath } from 'next/cache';
 
 const getAuthUser = async () => {
   const user = await currentUser();
   if (!user) redirect('/');
+  return user;
+};
+
+const getAdminUser = async () => {
+  const user = await getAuthUser();
+  if (user.id !== process.env.ADMIN_USER_ID) redirect('/');
   return user;
 };
 
@@ -82,3 +89,34 @@ export const createProductAction: actionFunction = async (
   }
   redirect('/admin/products');
 };
+
+export const fetchAdminProducts = async () => {
+  await getAdminUser();
+  const products = await db.product.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return products;
+};
+
+export const deleteProduct = async (prevState: { productId: string }) => {
+  await getAdminUser();
+
+  const { productId } = prevState;
+
+  try {
+    await db.product.delete({
+      where: {
+        id: productId,
+      },
+    });
+    revalidatePath('admin/products');
+    return { message: 'Product removed!' };
+  } catch (error) {
+    renderError(error);
+  }
+};
+
+// prevState: any, formData: FormData
