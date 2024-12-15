@@ -14,8 +14,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { IconButton } from '@/components/form/Buttons';
-import FormInput from '@/components/form/Forminput';
-import { Input } from '@/components/ui/input';
 import { actionFunction } from '@/utils/types';
 
 async function ItemsPage() {
@@ -64,7 +62,6 @@ async function ItemsPage() {
                   <FormContainer action={removeProduct}>
                     <IconButton actionType="delete" name={name} />
                   </FormContainer>
-                  {/* <DeleteProduct productId={productId} name={name} /> */}
                 </TableCell>
               </TableRow>
             );
