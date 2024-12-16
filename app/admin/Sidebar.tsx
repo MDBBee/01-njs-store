@@ -20,7 +20,9 @@ function Sidebar() {
             variant={variant}
             key={link.href}
           >
-            <Link href={link.href}>{link.label}</Link>
+            <Link href={link.href} key={link.href}>
+              {link.label}
+            </Link>
           </Button>
         );
       })}
