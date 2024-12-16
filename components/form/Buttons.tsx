@@ -90,14 +90,20 @@ export const CardSignInButton = () => {
   );
 };
 
-export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
+export const CardSubmitButton = ({
+  isFavorite,
+  className = '',
+}: {
+  isFavorite: boolean;
+  className?: string;
+}) => {
   const { pending } = useFormStatus();
   return (
     <Button
       type="submit"
       size="icon"
       variant="outline"
-      className=" p-2 cursor-pointer"
+      className={`p-2 cursor-pointer ${className}`}
     >
       {pending ? (
         <ReloadIcon className=" animate-spin" />
