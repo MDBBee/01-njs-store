@@ -12,6 +12,7 @@ import {
 import { deleteImage, supabase, uploadImage } from './supabase';
 import { revalidatePath } from 'next/cache';
 import { string } from 'zod';
+import { Prisma } from '@prisma/client';
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -293,10 +294,12 @@ export const fetchProductReviewsByuser = async () => {
     },
   });
 
-  return { message: 'Review submitted successfully' };
+  return reviews;
 };
 
-export const deleteReview = async (prevState: { reviewId: string }) => {
+export const deleteReview: Function = async (prevState: {
+  reviewId: string;
+}): Promise<{ message: string }> => {
   const { reviewId } = prevState;
   const user = await getAuthUser();
 
@@ -307,13 +310,11 @@ export const deleteReview = async (prevState: { reviewId: string }) => {
         clerkId: user.id,
       },
     });
-
     revalidatePath('/reviews');
+    return { message: 'Review deleted successfully' };
   } catch (error) {
-    renderError(error);
+    return renderError(error);
   }
-
-  return { message: 'Review submitted successfully' };
 };
 
 export const findExistingReview = async (

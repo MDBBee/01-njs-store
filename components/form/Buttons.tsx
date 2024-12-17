@@ -66,7 +66,9 @@ export function IconButton({
   };
 
   return (
-    <TooltipInfo text={`${actionType}  "${name}"  product`}>
+    <TooltipInfo
+      text={`${actionType}  ${name}  ${name === 'this' ? 'review' : 'product'}`}
+    >
       <Button type="submit" size="icon" variant="outline">
         {pending ? <ReloadIcon className="animate-spin" /> : renderIcon()}
       </Button>
